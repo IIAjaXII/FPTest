@@ -1,0 +1,40 @@
+import { Enum } from 'cc';
+
+/**
+ * Все стандартные easing-функции Cocos Creator для твинов (отсортированы по алфавиту)
+ */
+export const TweenType = Enum({
+    BackIn: 'backIn',
+    BackInOut: 'backInOut',
+    BackOut: 'backOut',
+    BounceIn: 'bounceIn',
+    BounceInOut: 'bounceInOut',
+    BounceOut: 'bounceOut',
+    CircIn: 'circIn',
+    CircInOut: 'circInOut',
+    CircOut: 'circOut',
+    CubicIn: 'cubicIn',
+    CubicInOut: 'cubicInOut',
+    CubicOut: 'cubicOut',
+    ElasticIn: 'elasticIn',
+    ElasticInOut: 'elasticInOut',
+    ElasticOut: 'elasticOut',
+    ExpoIn: 'expoIn',
+    ExpoInOut: 'expoInOut',
+    ExpoOut: 'expoOut',
+    Fade: 'fade',
+    Linear: 'linear',
+    QuadIn: 'quadIn',
+    QuadInOut: 'quadInOut',
+    QuadOut: 'quadOut',
+    QuartIn: 'quartIn',
+    QuartInOut: 'quartInOut',
+    QuartOut: 'quartOut',
+    QuintIn: 'quintIn',
+    QuintInOut: 'quintInOut',
+    QuintOut: 'quintOut',
+    SineIn: 'sineIn',
+    SineInOut: 'sineInOut',
+    SineOut: 'sineOut',
+    Smooth: 'smooth',
+}); 

@@ -1,0 +1,39 @@
+{
+  "buildPlatform": "web-mobile",
+    "orientation": "auto",
+      "exportChannels": [
+        "AppLovin",
+        "Facebook",
+        "Google",
+        "Mintegral",
+        "Unity",
+		"IronSource",
+		"Moloco"
+      ],
+        "tinify": false,
+          "tinifyApiKey": "jxQWXSDY7DRdx9NP7nZ3LWMznGXx8K0t",
+          "enableSplash": false,
+            "injectOptions": {
+    "AppLovin": {
+      "body": "<script>if(window.mraid.getState()==='loading'){window.mraid.addEventListener('ready',onSdkReady)}else{onSdkReady()}function viewableChangeHandler(viewable){if(viewable){}}function onSdkReady(){window.mraid.addEventListener('viewableChange',viewableChangeHandler);if(window.mraid.isViewable()){}}var url='https://apps.apple.com/us/app/';var android='https://play.google.com/store/apps/';var userAgent=navigator.userAgent;if(/android/i.test(userAgent)){url=android}function onCtaClick(){window.mraid.open(url)}</script>"
+    },
+    "Google": {
+      "body": "<script>function onCtaClick(){;var clickTag = 'https://play.google.com/store/apps/'; window.open(clickTag); }</script>"
+    },
+    "Unity": {
+      "body": "<script>if(window.mraid.getState()==='loading'){window.mraid.addEventListener('ready',onSdkReady)}else{onSdkReady()}function viewableChangeHandler(viewable){if(viewable){}}function onSdkReady(){window.mraid.addEventListener('viewableChange',viewableChangeHandler);if(window.mraid.isViewable()){}}var url='https://apps.apple.com/us/app/';var android='https://play.google.com/store/apps/';var userAgent=navigator.userAgent;if(/android/i.test(userAgent)){url=android}function onCtaClick(){window.mraid.open(url)}</script>"
+    },
+    "Facebook": {
+      "body": "<script>function onCtaClick(){if(typeof FbPlayableAd !=='undefined'){console.log('FBdefined');FbPlayableAd.onCTAClick();}}</script>"
+    },
+    "Mintegral": {
+      "body": "<script>function onCtaClick(){window.install && window.install(); } function gameStart() {window.gameReady && window.gameReady();} function gameClose() { window.gameEnd && window.gameEnd(); } function gameFinish() {window.gameEnd && window.gameEnd();}</script>"
+    },
+	"IronSource": {
+      "body": "<script>if(window.mraid.getState()==='loading'){window.mraid.addEventListener('ready',onSdkReady)}else{onSdkReady()}function viewableChangeHandler(viewable){if(viewable){}}function onSdkReady(){window.mraid.addEventListener('viewableChange',viewableChangeHandler);if(window.mraid.isViewable()){}}var url='https://apps.apple.com/us/app/';var android='https://play.google.com/store/apps/';var userAgent=navigator.userAgent;if(/android/i.test(userAgent)){url=android}function onCtaClick(){window.mraid.open(url)}</script>"
+    },
+	"Moloco": {
+      "body": "<script>function onCtaClick(){if(typeof FbPlayableAd !=='undefined'){console.log('FBdefined');FbPlayableAd.onCTAClick();}}</script>"
+    }	
+  }
+}
