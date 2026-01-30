@@ -37,7 +37,7 @@
       },
       "physics": {
         "_value": true,
-        "_option": "physics-ammo"
+        "_option": "physics-cannon"
       },
       "physics-ammo": {
         "_value": false
@@ -133,7 +133,7 @@
       "marionette",
       "particle",
       "particle-2d",
-      "physics-ammo",
+      "physics-cannon",
       "primitive",
       "skeletal-animation",
       "tween",

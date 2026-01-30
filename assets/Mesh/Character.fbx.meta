@@ -4,33 +4,9 @@
   "imported": true,
   "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886",
   "files": [
-    "__original-animation-0.cconb",
-    "__original-animation-1.cconb"
+    "__original-animation-0.cconb"
   ],
   "subMetas": {
-    "27448": {
-      "importer": "gltf-animation",
-      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@27448",
-      "displayName": "",
-      "id": "27448",
-      "name": "T-pose.animation",
-      "userData": {
-        "gltfIndex": 1,
-        "wrapMode": 2,
-        "sample": 30,
-        "span": {
-          "from": 0,
-          "to": 0.0416666679084301
-        },
-        "events": []
-      },
-      "ver": "1.0.16",
-      "imported": true,
-      "files": [
-        ".cconb"
-      ],
-      "subMetas": {}
-    },
     "39e1f": {
       "importer": "gltf-mesh",
       "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@39e1f",
@@ -48,15 +24,16 @@
       ],
       "subMetas": {}
     },
-    "f39b2": {
+    "e54b3": {
       "importer": "gltf-animation",
-      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@f39b2",
+      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@e54b3",
       "displayName": "",
-      "id": "f39b2",
-      "name": "Action.animation",
+      "id": "e54b3",
+      "name": "Armature|Armature|Action_1.animation",
       "userData": {
         "gltfIndex": 0,
         "wrapMode": 2,
+        "speed": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -79,7 +56,7 @@
       "name": "UnnamedSkeleton.skeleton",
       "userData": {
         "gltfIndex": 0,
-        "jointsLength": 78
+        "jointsLength": 91
       },
       "ver": "1.0.1",
       "imported": true,
@@ -88,35 +65,12 @@
       ],
       "subMetas": {}
     },
-    "7d6ab": {
-      "importer": "texture",
-      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@7d6ab",
-      "displayName": "",
-      "id": "7d6ab",
-      "name": "base_color_texture.texture",
-      "userData": {
-        "wrapModeS": "repeat",
-        "wrapModeT": "repeat",
-        "minfilter": "linear",
-        "magfilter": "linear",
-        "mipfilter": "none",
-        "anisotropy": 0,
-        "isUuid": false,
-        "imageUuidOrDatabaseUri": "db://assets/Mesh/Textures/pattern.png"
-      },
-      "ver": "1.0.22",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "b4e6b": {
+    "1043e": {
       "importer": "gltf-material",
-      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@b4e6b",
+      "uuid": "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@1043e",
       "displayName": "",
-      "id": "b4e6b",
-      "name": "Material.material",
+      "id": "1043e",
+      "name": "Material.002.material",
       "userData": {
         "gltfIndex": 0
       },
@@ -145,39 +99,22 @@
     }
   },
   "userData": {
-    "imageMetas": [
-      {
-        "name": "base_color_texture",
-        "uri": "db://assets/Mesh/Textures/pattern.png"
-      }
-    ],
+    "imageMetas": [],
     "fbx": {
       "smartMaterialEnabled": true
     },
     "animationImportSettings": [
       {
-        "name": "Action",
+        "name": "Armature|Armature|Action",
         "duration": 0.0416666679084301,
         "fps": 30,
         "splits": [
           {
-            "name": "Action",
+            "name": "Armature|Armature|Action_1",
             "from": 0,
             "to": 0.0416666679084301,
-            "wrapMode": 2
-          }
-        ]
-      },
-      {
-        "name": "T-pose",
-        "duration": 0.0416666679084301,
-        "fps": 30,
-        "splits": [
-          {
-            "name": "T-pose",
-            "from": 0,
-            "to": 0.0416666679084301,
-            "wrapMode": 2
+            "wrapMode": 2,
+            "speed": 1
           }
         ]
       }
@@ -190,11 +127,9 @@
       "skeletons": [
         "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@438fe"
       ],
-      "textures": [
-        "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@7d6ab"
-      ],
+      "textures": [],
       "materials": [
-        "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@b4e6b"
+        "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@1043e"
       ],
       "scenes": [
         "cf426cb6-51e7-4e5d-bb9c-98370bf1c886@1e9c3"

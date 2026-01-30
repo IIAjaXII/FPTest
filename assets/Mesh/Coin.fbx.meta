@@ -36,7 +36,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": false,
-        "imageUuidOrDatabaseUri": "db://assets/Mesh/Textures/pattern.png"
+        "imageUuidOrDatabaseUri": "db://assets/Mesh/Textures/pattern.webp"
       },
       "ver": "1.0.22",
       "imported": true,
@@ -82,7 +82,7 @@
     "imageMetas": [
       {
         "name": "base_color_texture",
-        "uri": "db://assets/Mesh/Textures/pattern.png"
+        "uri": "db://assets/Mesh/Textures/pattern.webp"
       }
     ],
     "fbx": {
@@ -109,6 +109,73 @@
       "enable": false,
       "simplifyOptions": {
         "targetRatio": 0.8
+      }
+    },
+    "materials": {
+      "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@b4e6b": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "f648964e-8d32-41fc-9ac9-7a1e714dd17b",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "DCC_APP_NAME": 2,
+            "USE_ALBEDO_MAP": true,
+            "HAS_EXPORTED_METALLIC": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainColor": {
+              "__type__": "cc.Color",
+              "r": 231,
+              "g": 231,
+              "b": 231,
+              "a": 255
+            },
+            "shininessExponent": 25,
+            "specularFactor": 0.25,
+            "transparencyFactor": 0
+          },
+          {},
+          {}
+        ]
       }
     }
   }

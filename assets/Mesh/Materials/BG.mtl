@@ -4,46 +4,16 @@
   "_objFlags": 0,
   "_native": "",
   "_effectAsset": {
-    "__uuid__": "c8f66d17-351a-48da-a12c-0212d28575c4",
+    "__uuid__": "a3cd009f-0ab0-420d-9278-b9fdab939bbc",
     "__expectedType__": "cc.EffectAsset"
   },
   "_techIdx": 0,
   "_defines": [
     {
-      "USE_ALBEDO_MAP": true
-    },
-    {},
-    {},
-    {}
+      "USE_TEXTURE": true
+    }
   ],
   "_states": [
-    {
-      "rasterizerState": {},
-      "depthStencilState": {},
-      "blendState": {
-        "targets": [
-          {}
-        ]
-      }
-    },
-    {
-      "rasterizerState": {},
-      "depthStencilState": {},
-      "blendState": {
-        "targets": [
-          {}
-        ]
-      }
-    },
-    {
-      "rasterizerState": {},
-      "depthStencilState": {},
-      "blendState": {
-        "targets": [
-          {}
-        ]
-      }
-    },
     {
       "rasterizerState": {},
       "depthStencilState": {},
@@ -56,22 +26,17 @@
   ],
   "_props": [
     {
+      "mainTexture": {
+        "__uuid__": "74e78bcd-4521-4c14-821f-a2a712f419f3@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
       "tilingOffset": {
         "__type__": "cc.Vec4",
         "x": 5,
         "y": 1,
         "z": 0,
         "w": 0
-      },
-      "roughness": 0,
-      "specularIntensity": 0,
-      "mainTexture": {
-        "__uuid__": "74e78bcd-4521-4c14-821f-a2a712f419f3@6c48a",
-        "__expectedType__": "cc.Texture2D"
       }
-    },
-    {},
-    {},
-    {}
+    }
   ]
 }
