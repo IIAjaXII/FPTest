@@ -8,5 +8,22 @@
       "fitHeight": true
     }
   },
-  "custom_joint_texture_layouts": []
+  "custom_joint_texture_layouts": [],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Machine"
+      },
+      {
+        "index": 2,
+        "name": "Parts"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 7,
+      "1": 1,
+      "2": 5
+    }
+  }
 }

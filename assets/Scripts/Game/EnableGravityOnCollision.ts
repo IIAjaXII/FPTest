@@ -1,4 +1,4 @@
-import { _decorator, Component, Collider, ITriggerEvent, RigidBody, warn } from 'cc';
+import { _decorator, Component, Collider, ERigidBodyType, ITriggerEvent, RigidBody, warn } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -6,6 +6,12 @@ const { ccclass, property } = _decorator;
 export class EnableGravityOnCollision extends Component {
     @property({ type: Collider, tooltip: 'Коллайдер, который будет отслеживать столкновения. Если пусто — берётся с текущего узла.' })
     collider: Collider | null = null;
+
+    @property({ tooltip: 'Смещать этот объект по X после успешного переключения.' })
+    shiftOnTrigger = true;
+
+    @property({ tooltip: 'Смещение по X (ед.).' })
+    shiftDistance = 1;
 
     onEnable() {
         const collider = this.collider ?? this.getComponent(Collider);
@@ -26,7 +32,12 @@ export class EnableGravityOnCollision extends Component {
     private onTriggerEnter(event: ITriggerEvent) {
         const otherRb = event.otherCollider?.getComponent(RigidBody);
         if (otherRb) {
-            otherRb.useGravity = true;
+            otherRb.type = ERigidBodyType.DYNAMIC;
+            if (this.shiftOnTrigger) {
+                const pos = this.node.worldPosition;
+                pos.x += this.shiftDistance;
+                this.node.setWorldPosition(pos);
+            }
         }
     }
 }
