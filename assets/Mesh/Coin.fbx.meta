@@ -5,6 +5,22 @@
   "uuid": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99",
   "files": [],
   "subMetas": {
+    "99380": {
+      "importer": "gltf-material",
+      "uuid": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@99380",
+      "displayName": "",
+      "id": "99380",
+      "name": "Material.001.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
     "a4587": {
       "importer": "gltf-mesh",
       "uuid": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@a4587",
@@ -18,45 +34,6 @@
       "imported": true,
       "files": [
         ".bin",
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "7d6ab": {
-      "importer": "texture",
-      "uuid": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@7d6ab",
-      "displayName": "",
-      "id": "7d6ab",
-      "name": "base_color_texture.texture",
-      "userData": {
-        "wrapModeS": "repeat",
-        "wrapModeT": "repeat",
-        "minfilter": "linear",
-        "magfilter": "linear",
-        "mipfilter": "none",
-        "anisotropy": 0,
-        "isUuid": false,
-        "imageUuidOrDatabaseUri": "db://assets/Mesh/Textures/pattern.webp"
-      },
-      "ver": "1.0.22",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
-    "b4e6b": {
-      "importer": "gltf-material",
-      "uuid": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@b4e6b",
-      "displayName": "",
-      "id": "b4e6b",
-      "name": "Material.material",
-      "userData": {
-        "gltfIndex": 0
-      },
-      "ver": "1.0.14",
-      "imported": true,
-      "files": [
         ".json"
       ],
       "subMetas": {}
@@ -79,12 +56,7 @@
     }
   },
   "userData": {
-    "imageMetas": [
-      {
-        "name": "base_color_texture",
-        "uri": "db://assets/Mesh/Textures/pattern.webp"
-      }
-    ],
+    "imageMetas": [],
     "fbx": {
       "smartMaterialEnabled": true
     },
@@ -94,11 +66,9 @@
         "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@a4587"
       ],
       "skeletons": [],
-      "textures": [
-        "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@7d6ab"
-      ],
+      "textures": [],
       "materials": [
-        "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@b4e6b"
+        "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@99380"
       ],
       "scenes": [
         "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@4b8b9"
