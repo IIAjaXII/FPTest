@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, Node, RigidBody, Toggle, Vec3 } from 'cc';
+import { _decorator, Component, Enum, isValid, Node, RigidBody, Toggle, Vec3 } from 'cc';
 import { gameEvents } from '../System/GameEvents';
 
 const { ccclass, property } = _decorator;
@@ -91,6 +91,9 @@ export class FanThrustVehicle extends Component {
     }
 
     update(dt: number) {
+        if (!isValid(this.node, true)) {
+            return;
+        }
         this._prepareFrameDelta();
 
         const isActive = !this.toggle || this.toggle.isChecked;
@@ -181,7 +184,7 @@ export class FanThrustVehicle extends Component {
         const deltaDeg = angleRad * 57.2958; // deg
 
         for (const wheel of this.wheelNodes) {
-            if (!wheel) {
+            if (!wheel || !isValid(wheel, true)) {
                 continue;
             }
             const euler = wheel.eulerAngles;
@@ -215,7 +218,7 @@ export class FanThrustVehicle extends Component {
         const deltaDeg = angleRad * 57.2958; // deg
 
         for (const propeller of this.propellerNodes) {
-            if (!propeller) {
+            if (!propeller || !isValid(propeller, true)) {
                 continue;
             }
             const euler = propeller.eulerAngles;

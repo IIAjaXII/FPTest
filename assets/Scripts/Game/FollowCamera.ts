@@ -13,6 +13,12 @@ export class FollowCamera extends Component {
     @property({ tooltip: 'Брать стартовый оффсет из текущих позиций при старте.' })
     useInitialOffset = true;
 
+    @property({ tooltip: 'Плавное следование камеры.' })
+    smoothFollow = true;
+
+    @property({ tooltip: 'Скорость плавного следования (чем больше, тем быстрее).' })
+    smoothSpeed = 6;
+
     private _tmpPos = new Vec3();
 
     start() {
@@ -25,12 +31,18 @@ export class FollowCamera extends Component {
         }
     }
 
-    lateUpdate() {
+    lateUpdate(dt: number) {
         if (!this.target) {
             return;
         }
-
         Vec3.add(this._tmpPos, this.target.worldPosition, this.offset);
+        if (!this.smoothFollow) {
+            this.node.setWorldPosition(this._tmpPos);
+            return;
+        }
+        const t = 1 - Math.exp(-this.smoothSpeed * dt);
+        const current = this.node.worldPosition;
+        Vec3.lerp(this._tmpPos, current, this._tmpPos, t);
         this.node.setWorldPosition(this._tmpPos);
     }
 }

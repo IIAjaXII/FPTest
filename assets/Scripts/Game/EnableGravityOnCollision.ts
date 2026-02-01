@@ -1,4 +1,4 @@
-import { _decorator, Component, Collider, ERigidBodyType, ITriggerEvent, RigidBody, warn } from 'cc';
+import { _decorator, Component, Collider, ERigidBodyType, ITriggerEvent, RigidBody, warn, director } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -12,6 +12,12 @@ export class EnableGravityOnCollision extends Component {
 
     @property({ tooltip: 'Смещение по X (ед.).' })
     shiftDistance = 1;
+
+    @property({ tooltip: 'Порог FPS, ниже которого используется другой шаг.' })
+    lowFpsThreshold = 55;
+
+    @property({ tooltip: 'Смещение по X при низком FPS (ед.).' })
+    lowFpsShiftDistance = 0.8;
 
     onEnable() {
         const collider = this.collider ?? this.getComponent(Collider);
@@ -33,9 +39,17 @@ export class EnableGravityOnCollision extends Component {
         const otherRb = event.otherCollider?.getComponent(RigidBody);
         if (otherRb) {
             otherRb.type = ERigidBodyType.DYNAMIC;
+            if (event.otherCollider && !event.otherCollider.isTrigger) {
+                event.otherCollider.isTrigger = true;
+            }
             if (this.shiftOnTrigger) {
                 const pos = this.node.worldPosition;
-                pos.x += this.shiftDistance;
+                const dt = director.getDeltaTime();
+                const fps = dt > 0 ? 1 / dt : 0;
+                const step = fps > 0 && fps < this.lowFpsThreshold
+                    ? this.lowFpsShiftDistance
+                    : this.shiftDistance;
+                pos.x += step;
                 this.node.setWorldPosition(pos);
             }
         }
