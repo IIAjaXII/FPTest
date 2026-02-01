@@ -1,5 +1,5 @@
 import { _decorator, Component, Vec3, UIOpacity, tween, Tween, Enum, Node } from 'cc';
-import { TweenType } from './TweenTypes';
+import { TweenType, TweenTypeValues } from './TweenTypes';
 
 
 const { ccclass, property } = _decorator;
@@ -75,7 +75,7 @@ export class UniversalAnimator extends Component {
         type: TweenType,
         tooltip: "Тип анимации (easing функция)"
     })
-    public tweenType: string = TweenType.Linear;
+    public tweenType: number = TweenType.Linear;
 
     @property({
         tooltip: "Зацикливать анимацию?"
@@ -103,11 +103,6 @@ export class UniversalAnimator extends Component {
     public repeatCount: number = 0;
 
     @property({
-        tooltip: "Использовать реальное время? (игнорирует замедление времени в игре)"
-    })
-    public useRealTime: boolean = true;
-
-    @property({
         type: [Node],
         tooltip: "Объекты, которые будут включены при завершении анимации"
     })
@@ -122,7 +117,7 @@ export class UniversalAnimator extends Component {
     private _currentTween: Tween<any> | null = null;
     private _isAnimating: boolean = false;
     private _uiOpacity: UIOpacity | null = null;
-    private _delayTimer: any = null; // Для хранения setTimeout/scheduleOnce
+    private _delayTimer: any = null; // Для хранения scheduleOnce
 
     onLoad() {
         // Для Opacity получаем или создаем UIOpacity компонент
@@ -147,17 +142,9 @@ export class UniversalAnimator extends Component {
         // Перезапускаем анимацию если autoStart включен
         if (this.autoStart) {
             if (this.startDelay > 0) {
-                // Если useRealTime - используем setTimeout для реального времени
-                if (this.useRealTime) {
-                    this._delayTimer = setTimeout(() => {
-                        this.startAnimation();
-                    }, this.startDelay * 1000);
-                } else {
-                    // Иначе используем scheduleOnce (зависит от игрового времени)
-                    this._delayTimer = this.scheduleOnce(() => {
-                        this.startAnimation();
-                    }, this.startDelay);
-                }
+                this._delayTimer = this.scheduleOnce(() => {
+                    this.startAnimation();
+                }, this.startDelay);
             } else {
                 this.startAnimation();
             }
@@ -167,11 +154,7 @@ export class UniversalAnimator extends Component {
     onDisable() {
         // Очищаем таймер задержки если есть
         if (this._delayTimer !== null) {
-            if (this.useRealTime) {
-                clearTimeout(this._delayTimer);
-            } else {
-                this.unschedule(this._delayTimer);
-            }
+            this.unschedule(this._delayTimer);
             this._delayTimer = null;
         }
         this.stopAnimation();
@@ -287,6 +270,8 @@ export class UniversalAnimator extends Component {
                 break;
         }
 
+        const easing = TweenTypeValues[this.tweenType] || 'linear';
+
         if (this.pingPong) {
             // Анимация туда-обратно
             let backProperties: any;
@@ -308,8 +293,8 @@ export class UniversalAnimator extends Component {
             if (this.loop) {
                 if (this.repeatCount > 0) {
                     this._currentTween = tween(target)
-                        .to(this.duration, properties, { easing: this.tweenType as any })
-                        .to(this.duration, backProperties, { easing: this.tweenType as any })
+                        .to(this.duration, properties, { easing })
+                        .to(this.duration, backProperties, { easing })
                         .union()
                         .repeat(this.repeatCount)
                         .call(() => {
@@ -318,15 +303,15 @@ export class UniversalAnimator extends Component {
                     
                 } else {
                     this._currentTween = tween(target)
-                        .to(this.duration, properties, { easing: this.tweenType as any })
-                        .to(this.duration, backProperties, { easing: this.tweenType as any })
+                        .to(this.duration, properties, { easing })
+                        .to(this.duration, backProperties, { easing })
                         .union()
                         .repeatForever();
                 }
             } else {
                 this._currentTween = tween(target)
-                    .to(this.duration, properties, { easing: this.tweenType as any })
-                    .to(this.duration, backProperties, { easing: this.tweenType as any })
+                    .to(this.duration, properties, { easing })
+                    .to(this.duration, backProperties, { easing })
                     .call(() => {
                         this.onAnimationComplete();
                     });
@@ -336,7 +321,7 @@ export class UniversalAnimator extends Component {
             if (this.loop) {
                 if (this.repeatCount > 0) {
                     this._currentTween = tween(target)
-                        .to(this.duration, properties, { easing: this.tweenType as any })
+                        .to(this.duration, properties, { easing })
                         .call(() => { this.setToStartValue(); })
                         .union()
                         .repeat(this.repeatCount)
@@ -345,14 +330,14 @@ export class UniversalAnimator extends Component {
                         });
                 } else {
                     this._currentTween = tween(target)
-                        .to(this.duration, properties, { easing: this.tweenType as any })
+                        .to(this.duration, properties, { easing })
                         .call(() => { this.setToStartValue(); })
                         .union()
                         .repeatForever();
                 }
             } else {
                 this._currentTween = tween(target)
-                    .to(this.duration, properties, { easing: this.tweenType as any })
+                    .to(this.duration, properties, { easing })
                     .call(() => {
                         this.onAnimationComplete();
                     });
@@ -407,7 +392,7 @@ export class UniversalAnimator extends Component {
     /**
      * Устанавливает новые параметры анимации Vec3 и перезапускает её
      */
-    public setAnimationParams(startValue: Vec3, endValue: Vec3, duration: number, tweenType?: string) {
+    public setAnimationParams(startValue: Vec3, endValue: Vec3, duration: number, tweenType?: number) {
         this.startValue = startValue;
         this.endValue = endValue;
         this.duration = duration;
@@ -423,7 +408,7 @@ export class UniversalAnimator extends Component {
     /**
      * Устанавливает новые параметры анимации Opacity и перезапускает её
      */
-    public setOpacityParams(startOpacity: number, endOpacity: number, duration: number, tweenType?: string) {
+    public setOpacityParams(startOpacity: number, endOpacity: number, duration: number, tweenType?: number) {
         this.startOpacity = Math.max(0, Math.min(255, startOpacity));
         this.endOpacity = Math.max(0, Math.min(255, endOpacity));
         this.duration = duration;

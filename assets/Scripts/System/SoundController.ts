@@ -24,9 +24,14 @@ export class SoundController extends Component {
     @property({ type: AudioSource })
     public shotSource: AudioSource = null;
 
+    @property({ type: AudioSource })
+    public engineSource: AudioSource = null;
+
     private bgmMaxVolume: number = 1;
     private effectMaxVolume: number = 1;
     private shotMaxVolume: number = 1;
+    private engineMaxVolume: number = 1;
+    private engineVolumeFactor: number = 0;
     private _waitForFirstTouch: boolean = true;
     private _toggle: Toggle = null;
     private _gameEnded: boolean = false;
@@ -42,6 +47,10 @@ export class SoundController extends Component {
         if (this.shotSource) {
             this.shotMaxVolume = this.shotSource.volume;
         }
+        if (this.engineSource) {
+            this.engineMaxVolume = this.engineSource.volume;
+            this.engineSource.loop = true;
+        }
 
         // Подписка на события
         gameEvents.on('PLAY_SOUND', this.onPlaySound, this);
@@ -49,6 +58,7 @@ export class SoundController extends Component {
         gameEvents.on('STOP_BGM', this.onStopBGM, this);
         gameEvents.on('TOGGLE_SOUND', this.onToggleSound, this);
         gameEvents.on('SET_SOUND_ON', this.onSetSoundOn, this);
+        gameEvents.on('ENGINE_THROTTLE', this.onEngineThrottle, this);
         gameEvents.on('goalReached', this.onGameEnded, this);
 
         // Подписка на событие загрузки новой сцены
@@ -64,6 +74,7 @@ export class SoundController extends Component {
         gameEvents.off('STOP_BGM', this.onStopBGM, this);
         gameEvents.off('TOGGLE_SOUND', this.onToggleSound, this);
         gameEvents.off('SET_SOUND_ON', this.onSetSoundOn, this);
+        gameEvents.off('ENGINE_THROTTLE', this.onEngineThrottle, this);
         gameEvents.off('goalReached', this.onGameEnded, this);
 
         if (this._toggle) {
@@ -121,6 +132,12 @@ export class SoundController extends Component {
         this.updateVolume();
     }
 
+    private onEngineThrottle(data: number) {
+        this.engineVolumeFactor = Math.max(0, Math.min(1, data ?? 0));
+        this.updateEngineVolume();
+        this._ensureEnginePlaying();
+    }
+
     private updateVolume() {
         if (this.bgmSource) {
             this.bgmSource.volume = this.soundOn ? this.bgmMaxVolume : 0;
@@ -130,6 +147,20 @@ export class SoundController extends Component {
         }
         if (this.shotSource) {
             this.shotSource.volume = this.soundOn ? this.shotMaxVolume : 0;
+        }
+        this.updateEngineVolume();
+        this._ensureEnginePlaying();
+    }
+
+    private updateEngineVolume() {
+        if (this.engineSource) {
+            this.engineSource.volume = this.soundOn ? this.engineMaxVolume * this.engineVolumeFactor : 0;
+        }
+    }
+
+    private _ensureEnginePlaying() {
+        if (this.engineSource && this.soundOn && !this.engineSource.playing) {
+            this.engineSource.play();
         }
     }
 

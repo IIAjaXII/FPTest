@@ -22,14 +22,21 @@
       }
     ],
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 11
+      },
+      {
+        "__id__": 13
+      }
+    ],
     "_prefab": {
-      "__id__": 7
+      "__id__": 15
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -38.133,
+      "y": 2.718,
       "z": 0
     },
     "_lrot": {
@@ -67,16 +74,22 @@
     "_components": [
       {
         "__id__": 3
+      },
+      {
+        "__id__": 6
+      },
+      {
+        "__id__": 8
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 10
     },
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 5.408
+      "z": 0
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -87,9 +100,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 2,
+      "y": 2,
+      "z": 2
     },
     "_mobility": 0,
     "_layer": 1073741824,
@@ -126,7 +139,7 @@
       "__uuid__": "28cfb9d5-2f5a-4a08-b80d-731e7a980f99@a4587",
       "__expectedType__": "cc.Mesh"
     },
-    "_shadowCastingMode": 0,
+    "_shadowCastingMode": 1,
     "_shadowReceivingMode": 1,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,
@@ -160,6 +173,94 @@
     "_probeCubemap": null
   },
   {
+    "__type__": "70e2aLWOVhFcJgaYWNIsJp4",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 7
+    },
+    "animationName": "",
+    "animationType": 2,
+    "startValue": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "useStartValues": true,
+    "endValue": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 359,
+      "z": 0
+    },
+    "startOpacity": 255,
+    "endOpacity": 0,
+    "duration": 2,
+    "tweenType": 19,
+    "loop": true,
+    "pingPong": false,
+    "autoStart": true,
+    "startDelay": 0,
+    "repeatCount": 0,
+    "enableOnComplete": [],
+    "disableOnComplete": [],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "41i22oz2lBtIuDjNB3tY7C"
+  },
+  {
+    "__type__": "70e2aLWOVhFcJgaYWNIsJp4",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 9
+    },
+    "animationName": "",
+    "animationType": 1,
+    "startValue": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 1,
+      "z": 0
+    },
+    "useStartValues": true,
+    "endValue": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": -1,
+      "z": 0
+    },
+    "startOpacity": 255,
+    "endOpacity": 0,
+    "duration": 1,
+    "tweenType": 32,
+    "loop": true,
+    "pingPong": true,
+    "autoStart": true,
+    "startDelay": 0,
+    "repeatCount": 0,
+    "enableOnComplete": [],
+    "disableOnComplete": [],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "c0tCEIx/xGXZgzsjQvgWaL"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -173,6 +274,61 @@
     "nestedPrefabInstanceRoots": null
   },
   {
+    "__type__": "cc.SphereCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 12
+    },
+    "_material": null,
+    "_isTrigger": true,
+    "_center": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_radius": 1,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "d9f0Cko/RPuKfyMrIuCEum"
+  },
+  {
+    "__type__": "15034Myfv1BpJLPR1QmBzlK",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 14
+    },
+    "collider": {
+      "__id__": 11
+    },
+    "amount": 1,
+    "disableOnPickup": true,
+    "pickupVfx": {
+      "__uuid__": "3edf6402-a90e-49e5-8288-7cf9da3ce2ea",
+      "__expectedType__": "cc.Prefab"
+    },
+    "soundName": "coin",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "88twtdP9hJgq0ll7F9kJC1"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -181,7 +337,6 @@
       "__id__": 0
     },
     "fileId": "0auORVX99QSYHjxYweQevA",
-    "instance": null,
     "targetOverrides": null
   }
 ]

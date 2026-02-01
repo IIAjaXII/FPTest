@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3 } from 'cc';
+import { _decorator, Component, Node, Vec3, isValid } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -19,10 +19,16 @@ export class FollowCamera extends Component {
     @property({ tooltip: 'Скорость плавного следования (чем больше, тем быстрее).' })
     smoothSpeed = 6;
 
+    @property({ tooltip: 'Минимальная высота камеры по Y.' })
+    minY = 8;
+
+    @property({ tooltip: 'Максимальная высота камеры по Y.' })
+    maxY = 12;
+
     private _tmpPos = new Vec3();
 
     start() {
-        if (!this.target) {
+        if (!this.target || !isValid(this.target) || !this.node || !isValid(this.node)) {
             return;
         }
 
@@ -32,10 +38,11 @@ export class FollowCamera extends Component {
     }
 
     lateUpdate(dt: number) {
-        if (!this.target) {
+        if (!this.target || !isValid(this.target) || !this.node || !isValid(this.node)) {
             return;
         }
         Vec3.add(this._tmpPos, this.target.worldPosition, this.offset);
+        this._tmpPos.y = Math.min(this.maxY, Math.max(this.minY, this._tmpPos.y));
         if (!this.smoothFollow) {
             this.node.setWorldPosition(this._tmpPos);
             return;

@@ -563,7 +563,7 @@
       "__id__": 23
     },
     "_group": 4,
-    "_type": 2,
+    "_type": 4,
     "_mass": 1,
     "_allowSleep": true,
     "_linearDamping": 0.1,
@@ -2264,7 +2264,7 @@
     "rigidbody": {
       "__id__": 107
     },
-    "toggle": null,
+    "slider": null,
     "moveSpeed": 15,
     "acceleration": 5,
     "deceleration": 6,
@@ -2272,10 +2272,6 @@
     "lockRotationX": true,
     "lockRotationY": true,
     "lockRotationZ": false,
-    "lockPositionY": false,
-    "limitPositionYRange": true,
-    "minY": -1,
-    "maxY": 1,
     "wheelNodes": [
       {
         "__id__": 63
@@ -2300,6 +2296,7 @@
     "wheelSpinAxis": 2,
     "propellerSpinMultiplier": 2,
     "propellerSpinAxis": 0,
+    "destroyedSoundName": "",
     "_id": ""
   },
   {
@@ -2373,6 +2370,7 @@
       "__id__": 0
     },
     "fileId": "a5s9OLqMFZ7Jjc7tVLkeoG",
+    "instance": null,
     "targetOverrides": [],
     "nestedPrefabInstanceRoots": [
       {

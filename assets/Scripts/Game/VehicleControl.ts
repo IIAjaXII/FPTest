@@ -66,6 +66,9 @@ export class FanThrustVehicle extends Component {
     @property({ type: Enum(PropellerAxis), tooltip: 'Ось вращения пропеллера (локальная).' })
     propellerSpinAxis: PropellerAxis = PropellerAxis.Y;
 
+    @property({ tooltip: 'Имя звука для разрушения (PLAY_SOUND). Если пусто — звук не проигрывается.' })
+    destroyedSoundName = '';
+
     private _tmpForward = new Vec3();
     private _tmpVel = new Vec3();
     private _tmpDelta = new Vec3();
@@ -78,6 +81,7 @@ export class FanThrustVehicle extends Component {
     private _tmpEuler = new Vec3();
     private _tmpAngVel = new Vec3();
     private _sliderTween: Tween<Slider> | null = null;
+    private _lastThrottle = -1;
 
     onLoad() {
         gameEvents.on('vehicleDestroyed', this._onVehicleDestroyed, this);
@@ -98,6 +102,7 @@ export class FanThrustVehicle extends Component {
         this._prepareFrameDelta();
 
         const throttle = this.slider ? this.slider.progress : 1;
+        this._emitEngineThrottle(throttle);
         const hasThrust = throttle > 0;
         const targetSpeed = (this._forceStop || !hasThrust) ? 0 : this.moveSpeed * throttle;
 
@@ -128,6 +133,10 @@ export class FanThrustVehicle extends Component {
 
     private _onVehicleDestroyed() {
         this._forceStop = true;
+        if (this.destroyedSoundName) {
+            gameEvents.emit('PLAY_SOUND', { name: this.destroyedSoundName });
+        }
+        this._emitEngineThrottle(0);
         if (this.slider) {
             this.slider.enabled = false;
             if (this._sliderTween) {
@@ -242,5 +251,14 @@ export class FanThrustVehicle extends Component {
                     break;
             }
         }
+    }
+
+    private _emitEngineThrottle(throttle: number) {
+        const clamped = Math.max(0, Math.min(1, throttle));
+        if (Math.abs(clamped - this._lastThrottle) < 0.001) {
+            return;
+        }
+        this._lastThrottle = clamped;
+        gameEvents.emit('ENGINE_THROTTLE', clamped);
     }
 }
