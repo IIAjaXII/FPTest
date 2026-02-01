@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, isValid, Node, RigidBody, Toggle, Vec3 } from 'cc';
+import { _decorator, Component, Enum, isValid, Node, RigidBody, Slider, tween, Tween, Vec3 } from 'cc';
 import { gameEvents } from '../System/GameEvents';
 
 const { ccclass, property } = _decorator;
@@ -21,8 +21,8 @@ export class FanThrustVehicle extends Component {
     @property({ type: RigidBody, tooltip: 'Rigidbody (если есть) для фиксации угловой скорости.' })
     rigidbody: RigidBody | null = null;
 
-    @property({ type: Toggle, tooltip: 'Toggle, который включает тягу вентилятора.' })
-    toggle: Toggle | null = null;
+    @property({ type: Slider, tooltip: 'Slider, который задаёт силу тяги вентилятора (0-1).' })
+    slider: Slider | null = null;
 
     @property({ tooltip: 'Скорость движения по оси X (ед/сек).' })
     moveSpeed = 2;
@@ -77,6 +77,7 @@ export class FanThrustVehicle extends Component {
     private _initialEuler = new Vec3();
     private _tmpEuler = new Vec3();
     private _tmpAngVel = new Vec3();
+    private _sliderTween: Tween<Slider> | null = null;
 
     onLoad() {
         gameEvents.on('vehicleDestroyed', this._onVehicleDestroyed, this);
@@ -96,10 +97,11 @@ export class FanThrustVehicle extends Component {
         }
         this._prepareFrameDelta();
 
-        const isActive = !this.toggle || this.toggle.isChecked;
-        const targetSpeed = (this._forceStop || !isActive) ? 0 : this.moveSpeed;
+        const throttle = this.slider ? this.slider.progress : 1;
+        const hasThrust = throttle > 0;
+        const targetSpeed = (this._forceStop || !hasThrust) ? 0 : this.moveSpeed * throttle;
 
-        this._updateSpeed(dt, targetSpeed);
+        this._updateSpeed(dt, targetSpeed, throttle);
         this._moveAlongX(dt);
         this._updateWheelSpin(dt);
         this._updatePropellerSpin(dt);
@@ -126,8 +128,14 @@ export class FanThrustVehicle extends Component {
 
     private _onVehicleDestroyed() {
         this._forceStop = true;
-        if (this.toggle) {
-            this.toggle.isChecked = false;
+        if (this.slider) {
+            this.slider.enabled = false;
+            if (this._sliderTween) {
+                this._sliderTween.stop();
+            }
+            this._sliderTween = tween(this.slider)
+                .to(0.3, { progress: 0 }, { easing: 'linear' })
+                .start();
         }
     }
 
@@ -145,9 +153,9 @@ export class FanThrustVehicle extends Component {
         this._frameDeltaValid = true;
     }
 
-    private _updateSpeed(dt: number, targetSpeed: number) {
+    private _updateSpeed(dt: number, targetSpeed: number, throttle: number) {
         let accel = Math.abs(targetSpeed) > Math.abs(this._currentSpeed)
-            ? this.acceleration
+            ? this.acceleration * throttle
             : this.deceleration;
         if (this._forceStop && targetSpeed === 0) {
             accel *= this.destroyedDecelMultiplier;
