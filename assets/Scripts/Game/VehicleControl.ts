@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, isValid, Node, RigidBody, Slider, tween, Tween, Vec3 } from 'cc';
+import { _decorator, Component, Enum, isValid, Node, ParticleSystem, RigidBody, Slider, tween, Tween, Vec3 } from 'cc';
 import { gameEvents } from '../System/GameEvents';
 
 const { ccclass, property } = _decorator;
@@ -9,15 +9,8 @@ enum WheelAxis {
     Z = 2,
 }
 
-enum PropellerAxis {
-    X = 0,
-    Y = 1,
-    Z = 2,
-}
-
-
-@ccclass('FanThrustVehicle')
-export class FanThrustVehicle extends Component {
+@ccclass('VehicleControl')
+export class VehicleControl extends Component {
     @property({ type: RigidBody, tooltip: 'Rigidbody (если есть) для фиксации угловой скорости.' })
     rigidbody: RigidBody | null = null;
 
@@ -63,11 +56,20 @@ export class FanThrustVehicle extends Component {
     @property({ tooltip: 'Коэф. поворота пропеллера по скорости.' })
     propellerSpinMultiplier = 5;
 
-    @property({ type: Enum(PropellerAxis), tooltip: 'Ось вращения пропеллера (локальная).' })
-    propellerSpinAxis: PropellerAxis = PropellerAxis.Y;
+    @property({ type: Enum(WheelAxis), tooltip: 'Ось вращения пропеллера (локальная).' })
+    propellerSpinAxis: WheelAxis = WheelAxis.X;
 
     @property({ tooltip: 'Имя звука для разрушения (PLAY_SOUND). Если пусто — звук не проигрывается.' })
     destroyedSoundName = '';
+
+    @property({ type: [ParticleSystem], tooltip: 'Массив партиклов, которые запускаются при скорости.' })
+    speedParticles: ParticleSystem[] = [];
+
+    @property({ tooltip: 'Скорость, при которой партиклы запускаются (ед/сек).' })
+    particlesPlaySpeed = 0.5;
+
+    @property({ tooltip: 'Скорость, ниже которой партиклы ставятся на паузу (ед/сек).' })
+    particlesPauseSpeed = 0.2;
 
     private _tmpForward = new Vec3();
     private _tmpVel = new Vec3();
@@ -110,6 +112,7 @@ export class FanThrustVehicle extends Component {
         this._moveAlongX(dt);
         this._updateWheelSpin(dt);
         this._updatePropellerSpin(dt);
+        this._updateSpeedParticles();
     }
 
     lateUpdate() {
@@ -240,13 +243,13 @@ export class FanThrustVehicle extends Component {
             }
             const euler = propeller.eulerAngles;
             switch (this.propellerSpinAxis) {
-                case PropellerAxis.X:
+                case WheelAxis.X:
                     propeller.setRotationFromEuler(euler.x + deltaDeg, euler.y, euler.z);
                     break;
-                case PropellerAxis.Y:
+                case WheelAxis.Y:
                     propeller.setRotationFromEuler(euler.x, euler.y + deltaDeg, euler.z);
                     break;
-                case PropellerAxis.Z:
+                case WheelAxis.Z:
                     propeller.setRotationFromEuler(euler.x, euler.y, euler.z + deltaDeg);
                     break;
             }
@@ -260,5 +263,30 @@ export class FanThrustVehicle extends Component {
         }
         this._lastThrottle = clamped;
         gameEvents.emit('ENGINE_THROTTLE', clamped);
+    }
+
+    private _updateSpeedParticles() {
+        if (!this.speedParticles || this.speedParticles.length === 0) {
+            return;
+        }
+
+        const speedAbs = Math.abs(this._currentSpeed);
+        const shouldPlay = speedAbs >= this.particlesPlaySpeed;
+        const shouldPause = speedAbs <= this.particlesPauseSpeed;
+
+        for (const ps of this.speedParticles) {
+            if (!ps || !isValid(ps, true)) {
+                continue;
+            }
+            if (shouldPlay) {
+                if (!ps.isPlaying) {
+                    ps.play();
+                }
+            } else if (shouldPause) {
+                if (ps.isPlaying) {
+                    ps.stopEmitting();
+                }
+            }
+        }
     }
 }

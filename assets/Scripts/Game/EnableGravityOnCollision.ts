@@ -1,4 +1,4 @@
-import { _decorator, Component, Collider, ERigidBodyType, ITriggerEvent, RigidBody, warn, director } from 'cc';
+import { _decorator, Component, Collider, ERigidBodyType, ITriggerEvent, RigidBody, warn, game } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -44,7 +44,7 @@ export class EnableGravityOnCollision extends Component {
             }
             if (this.shiftOnTrigger) {
                 const pos = this.node.worldPosition;
-                const dt = director.getDeltaTime();
+                const dt = game.deltaTime;
                 const fps = dt > 0 ? 1 / dt : 0;
                 const step = fps > 0 && fps < this.lowFpsThreshold
                     ? this.lowFpsShiftDistance

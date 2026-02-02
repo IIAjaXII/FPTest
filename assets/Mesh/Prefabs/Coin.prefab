@@ -127,7 +127,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "4d528d6b-7b5f-4388-ab93-df70fd0b6296",
+        "__uuid__": "2d8d8549-5302-429e-9b23-911a4535c9a0",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -337,6 +337,7 @@
       "__id__": 0
     },
     "fileId": "0auORVX99QSYHjxYweQevA",
+    "instance": null,
     "targetOverrides": null
   }
 ]
