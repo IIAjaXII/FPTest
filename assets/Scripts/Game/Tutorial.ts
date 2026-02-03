@@ -53,6 +53,15 @@ export class Tutorial extends Component {
     @property({ tooltip: 'Изиинг исчезновения руки', type: TweenType })
     public fadeEasing = TweenType.SineInOut;
 
+    @property({ tooltip: 'Угол поворота руки по Z после привязки (градусы)' })
+    public rotateZDegrees = 5;
+
+    @property({ tooltip: 'Длительность поворота руки по Z (сек)' })
+    public rotateDuration = 0.25;
+
+    @property({ tooltip: 'Изиинг поворота руки', type: TweenType })
+    public rotateEasing = TweenType.SineInOut;
+
     onEnable() {
         this.playSequence();
     }
@@ -65,15 +74,27 @@ export class Tutorial extends Component {
         }
 
         const hand = this.handNode;
-        const targetWorld = this.targetNode.worldPosition.clone();
+        const targetLocal = new Vec3();
 
         tween(hand)
             .delay(this.moveInitialDelay)
-            .to(this.moveDuration, { worldPosition: targetWorld }, { easing: this.getEasing(this.moveEasing) })
+            .call(() => {
+                const handParent = hand.parent;
+                const targetWorld = this.targetNode?.worldPosition.clone();
+                if (!targetWorld) {
+                    return;
+                }
+                const computed = handParent ? this.toNodeSpace(handParent, targetWorld) : targetWorld;
+                targetLocal.set(computed);
+            })
+            .to(this.moveDuration, { position: targetLocal }, { easing: this.getEasing(this.moveEasing) })
             .call(() => {
                 // Сделать руку дочерней для цели и обнулить локальные координаты
+                const worldScale = hand.worldScale.clone();
                 hand.parent = this.targetNode;
                 hand.setPosition(Vec3.ZERO);
+                hand.setWorldScale(worldScale);
+                this.rotateHandAfterAttach();
             })
             .call(() => {
                 const sliderDuration = this.playSliderAnimation();
@@ -145,6 +166,22 @@ export class Tutorial extends Component {
             .start();
     }
 
+    private rotateHandAfterAttach() {
+        if (!this.handNode || this.rotateDuration <= 0) {
+            return;
+        }
+        if (this.rotateZDegrees === 0) {
+            return;
+        }
+
+        const target = this.handNode.eulerAngles.clone();
+        target.z += this.rotateZDegrees;
+
+        tween(this.handNode)
+            .to(this.rotateDuration, { eulerAngles: target }, { easing: this.getEasing(this.rotateEasing) })
+            .start();
+    }
+
     private getFadeDelay(): number {
         if (!this.handNode) {
             return 0;
@@ -173,5 +210,11 @@ export class Tutorial extends Component {
 
     private getEasing(type: TweenType): string {
         return TweenTypeValues[type] ?? 'sineInOut';
+    }
+
+    private toNodeSpace(node: Node, worldPos: Vec3): Vec3 {
+        const out = new Vec3();
+        node.inverseTransformPoint(out, worldPos);
+        return out;
     }
 }
