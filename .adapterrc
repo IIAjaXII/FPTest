@@ -15,7 +15,7 @@
           "enableSplash": false,
             "injectOptions": {
     "AppLovin": {
-      "body": "<script>if(window.mraid.getState()==='loading'){window.mraid.addEventListener('ready',onSdkReady)}else{onSdkReady()}function viewableChangeHandler(viewable){if(viewable){}}function onSdkReady(){window.mraid.addEventListener('viewableChange',viewableChangeHandler);if(window.mraid.isViewable()){}}var url='https://apps.apple.com/us/app/';var android='https://play.google.com/store/apps/';var userAgent=navigator.userAgent;if(/android/i.test(userAgent)){url=android}function onCtaClick(){window.mraid.open(url)}</script>"
+      "body": "<script>if(typeof window.mraid!=='undefined'){if(window.mraid.getState()==='loading'){window.mraid.addEventListener('ready',onSdkReady)}else{onSdkReady()}window.mraid.addEventListener('viewableChange',viewableChangeHandler)}function viewableChangeHandler(viewable){if(viewable){}}function onSdkReady(){if(window.mraid.isViewable()){}}var ios='https://apps.apple.com/us/app/ride-master-car-builder-game/id6449224139',android='https://play.google.com/store/apps/details?id=com.LuB.DeliveryConstruct&hl=en',ua=navigator.userAgent||navigator.vendor||window.opera,url=/android/i.test(ua)?android:ios;function onCtaClick(){if(typeof window.mraid!=='undefined'){window.mraid.open(url)}else{window.open(url,'_blank')}}</script>"
     },
     "Google": {
       "body": "<script>function onCtaClick(){;var clickTag = 'https://play.google.com/store/apps/'; window.open(clickTag); }</script>"
