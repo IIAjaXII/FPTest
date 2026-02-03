@@ -5594,6 +5594,8 @@
     "clearChildren": false,
     "useWorldSpace": true,
     "editorAutoClean": true,
+    "spawnWithDelay": false,
+    "spawnDelay": 0.1,
     "linearFactorYStart": 1,
     "linearFactorYEnd": 8,
     "_id": "90UUglkVtOZpKUJL37pTEH"
@@ -5698,7 +5700,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -34.702,
+      "x": -39.931,
       "y": 3,
       "z": 0
     },
@@ -5742,11 +5744,13 @@
     "axis": 0,
     "direction": 1,
     "length": 150,
-    "spacing": 10,
+    "spacing": 12,
     "includeStart": true,
     "clearChildren": false,
     "useWorldSpace": true,
     "editorAutoClean": true,
+    "spawnWithDelay": true,
+    "spawnDelay": 0.3,
     "linearFactorYStart": 1,
     "linearFactorYEnd": 8,
     "_id": "a2Qyag1H5NUY0P0/C62eMs"

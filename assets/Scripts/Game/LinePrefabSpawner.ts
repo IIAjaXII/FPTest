@@ -47,6 +47,12 @@ export class LinePrefabSpawner extends Component {
     @property({ tooltip: 'В редакторе очищать ранее созданные (по префиксу имени).' })
     editorAutoClean = true;
 
+    @property({ tooltip: 'Спавнить объекты с задержкой (по одному)' })
+    spawnWithDelay = false;
+
+    @property({ tooltip: 'Задержка между спавнами (сек)' })
+    spawnDelay = 0.1;
+
     @property({ tooltip: 'Linear Factor по Y для первого объекта.' })
     linearFactorYStart = 1;
 
@@ -82,7 +88,7 @@ export class LinePrefabSpawner extends Component {
 
         const startPos = this.useWorldSpace ? this.node.worldPosition.clone() : this.node.position.clone();
 
-        for (let i = 0; i < total; i++) {
+        const spawnOne = (i: number) => {
             const step = (startIndex + i) * this.spacing * this.direction;
             const pos = new Vec3(startPos.x, startPos.y, startPos.z);
 
@@ -98,7 +104,7 @@ export class LinePrefabSpawner extends Component {
                     break;
             }
 
-            const node = instantiate(this.prefab);
+            const node = instantiate(this.prefab!);
             if (this.editorAutoClean) {
                 node.name = `${SPAWN_PREFIX}${i}`;
             }
@@ -118,6 +124,29 @@ export class LinePrefabSpawner extends Component {
             } else {
                 warn('[LinePrefabSpawner] На объекте нет RigidBody.');
             }
+        };
+
+        if (this.spawnWithDelay) {
+            const delay = Math.max(0, this.spawnDelay);
+            const immediateCount = this.includeStart ? Math.min(1, total) : 0;
+
+            for (let i = 0; i < immediateCount; i++) {
+                spawnOne(i);
+            }
+
+            for (let i = 0; i < total; i++) {
+                if (i < immediateCount) {
+                    continue;
+                }
+                const index = i - immediateCount;
+                const spawnAt = immediateCount > 0 ? (index + 1) * delay : index * delay;
+                this.scheduleOnce(() => spawnOne(i), spawnAt);
+            }
+            return;
+        }
+
+        for (let i = 0; i < total; i++) {
+            spawnOne(i);
         }
     }
 
