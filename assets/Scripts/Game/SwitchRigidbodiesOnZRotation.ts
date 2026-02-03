@@ -65,12 +65,7 @@ export class SwitchRigidbodiesOnZRotation extends Component {
                 continue;
             }
             body.type = ERigidBodyType.DYNAMIC;
-           /* if (this.copyTargetVelocity && this.targetRigidbody) {
-                this.targetRigidbody.getLinearVelocity(this._tmpLinear);
-                this.targetRigidbody.getAngularVelocity(this._tmpAngular);
-                body.setLinearVelocity(this._tmpLinear);
-                body.setAngularVelocity(this._tmpAngular);
-            }*/
+           
         }
 
         gameEvents.emit('vehicleDestroyed');

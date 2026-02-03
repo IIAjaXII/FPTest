@@ -65,11 +65,20 @@ export class VehicleControl extends Component {
     @property({ type: [ParticleSystem], tooltip: 'Массив партиклов, которые запускаются при скорости.' })
     speedParticles: ParticleSystem[] = [];
 
+    @property({ type: [ParticleSystem], tooltip: 'Массив партиклов ветра (запускаются при вращении вентилятора).' })
+    windParticles: ParticleSystem[] = [];
+
     @property({ tooltip: 'Скорость, при которой партиклы запускаются (ед/сек).' })
     particlesPlaySpeed = 0.5;
 
     @property({ tooltip: 'Скорость, ниже которой партиклы ставятся на паузу (ед/сек).' })
     particlesPauseSpeed = 0.2;
+
+    @property({ tooltip: 'Значение слайдера, при котором партиклы ветра запускаются (0-1).' })
+    windParticlesPlaySpeed = 0.01;
+
+    @property({ tooltip: 'Значение слайдера, ниже которого партиклы ветра ставятся на паузу (0-1).' })
+    windParticlesPauseSpeed = 0;
 
     private _tmpForward = new Vec3();
     private _tmpVel = new Vec3();
@@ -113,6 +122,7 @@ export class VehicleControl extends Component {
         this._updateWheelSpin(dt);
         this._updatePropellerSpin(dt);
         this._updateSpeedParticles();
+        this._updateWindParticles();
     }
 
     lateUpdate() {
@@ -275,6 +285,32 @@ export class VehicleControl extends Component {
         const shouldPause = speedAbs <= this.particlesPauseSpeed;
 
         for (const ps of this.speedParticles) {
+            if (!ps || !isValid(ps, true)) {
+                continue;
+            }
+            if (shouldPlay) {
+                if (!ps.isPlaying) {
+                    ps.play();
+                }
+            } else if (shouldPause) {
+                if (ps.isPlaying) {
+                    ps.stopEmitting();
+                }
+            }
+        }
+    }
+
+    private _updateWindParticles() {
+        if (!this.windParticles || this.windParticles.length === 0) {
+            return;
+        }
+
+        const throttle = this.slider ? this.slider.progress : 1;
+        const clamped = Math.max(0, Math.min(1, throttle));
+        const shouldPlay = clamped >= this.windParticlesPlaySpeed;
+        const shouldPause = clamped <= this.windParticlesPauseSpeed;
+
+        for (const ps of this.windParticles) {
             if (!ps || !isValid(ps, true)) {
                 continue;
             }
